@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class ListProducts extends Component {
@@ -18,7 +19,7 @@ class ListProducts extends Component {
 
     const { isFetching, data, inputsValues } = this.props;
 
-    if (data.length === 0) return <p>Digite algo para ser pesquisado</p>
+    if (data.length === 0) return <p>Digite algo para ser pesquisado ou selecione uma categoria</p>
 
     if (data.results && data.results.length === 0) return <p>Não há resultados para a busca "{inputsValues.queryValue}"</p>
 
@@ -29,9 +30,13 @@ class ListProducts extends Component {
           <ul>
             {data.results.map((product) =>
               <li key={product.id}>
-                <img src={product.thumbnail} alt={product.title} />
+                <Link to={`/${product.id}`}>
+                  <img src={product.thumbnail} alt={product.title} />
+                </Link>
                 <div className="infos-product">
-                  <h2>{product.title}</h2>
+                  <Link to={`/${product.id}`}>
+                    <h2>{product.title}</h2>
+                  </Link>
                   <p>
                     {product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                   </p>

@@ -5,7 +5,7 @@ import Loading from './Loading';
 import {
   fetchGetProductsFromCategoryAndQuery,
   inputCategoyId,
-  cancelRequest,
+  inputQuery,
 } from '../actions';
 
 
@@ -30,13 +30,14 @@ class AsideCategories extends Component {
   }
 
   onChangeSearchCategoryId(event) {
-    const { fetchGetProductsFromCategoryAndQuery, inputsValues, inputCategoyId, resServer, data } = this.props;
+    const { fetchGetProductsFromCategoryAndQuery, inputsValues, inputCategoyId, resServer, data, inputQuery } = this.props;
     const categoryIdValue = event.target.value;
     const queryValue = inputsValues.queryValue.replace(/\s/g, '');
-    console.log(queryValue)
     inputCategoyId(categoryIdValue);
-    if (resServer && data.results.length === 0) {
-      fetchGetProductsFromCategoryAndQuery(categoryIdValue, '');
+
+    if (resServer && data.results && data.results.length === 0) {
+      fetchGetProductsFromCategoryAndQuery(categoryIdValue, '')
+        .then(() => inputQuery(''));
     } else {
       fetchGetProductsFromCategoryAndQuery(categoryIdValue, queryValue);
     }
@@ -92,6 +93,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchGetProductsFromCategoryAndQuery: (categoryId, query) => (dispatch(fetchGetProductsFromCategoryAndQuery(categoryId, query))),
   inputCategoyId: (value) => (dispatch(inputCategoyId(value))),
+  inputQuery: (value) => (dispatch(inputQuery(value))),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AsideCategories);
