@@ -1,34 +1,23 @@
 import React, { Component } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import ProductDetails from '../components/ProductDetails';
+
 
 class DetailsPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      location: '',
-      productId: '',
+      
     }
   }
 
-  componentDidMount() {
-    const location = window.location.href;
-    const regexProductId = /MLB[0-9]{10}/;
-    this.setState({
-      location,
-      productId: regexProductId.exec(location)[0]
-     });
-
-  }
-
-
   render() {
 
-    const { location } = this.state;
+    const { productId } = this.props.match.params;
 
     return (
       <div>
-        {location}
+        <ProductDetails productId={productId} />
       </div>
     );
   }

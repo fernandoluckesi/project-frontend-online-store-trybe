@@ -6,6 +6,7 @@ export const RECEIVE_FAIL = 'RECEIVE_FAIL';
 export const CANCEL_REQUEST = 'CANCEL_REQUEST';
 export const INPUT_QUERY = 'INPUT_QUERY';
 export const INPUT_CATEGORYID = 'INPUT_CATEGORYID';
+export const ADD_PRODUCT = 'ADD_PRODUCT';
 
 export const inputQuery = (queryValue) => ({
   type: INPUT_QUERY,
@@ -33,6 +34,11 @@ const receiveFail = (error) => ({
 
 export const cancelRequest = () => ({
   type: CANCEL_REQUEST,
+});
+
+export const addProductsShoppingCart = (products) => ({
+  type: ADD_PRODUCT,
+  products,
 });
 
 export function fetchGetProductsFromCategoryAndQuery(categoryId, query) {

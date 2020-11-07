@@ -5,7 +5,8 @@ import {
   RECEIVE_FAIL,
   INPUT_QUERY,
   INPUT_CATEGORYID,
-  CANCEL_REQUEST
+  CANCEL_REQUEST,
+  ADD_PRODUCT
 } from '../actions';
 
 const stateDefault = {
@@ -66,6 +67,30 @@ const inputsValues = (state = stateInputsValues, action) => {
   }
 };
 
-const rootReducer = combineReducers({ requestData, inputsValues });
+
+const localStorageShoppingCart = JSON.parse(localStorage.getItem('cart'));
+console.log(localStorageShoppingCart)
+const totalAmount = localStorageShoppingCart ? localStorageShoppingCart.reduce((ac, cc) => ac + cc.amount, 0) : 0;
+
+
+const stateShoppingCart = {
+  products: [],
+  totalAmount,
+};
+
+const shoppingCart = (state = stateShoppingCart, action) => {
+  switch (action.type) {
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        products: action.products,
+        totalAmount: state.totalAmount + 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({ requestData, inputsValues, shoppingCart });
 
 export default rootReducer;
